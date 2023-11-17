@@ -32,6 +32,12 @@ p <- plogis(logitp)
 y <- rbinom(n, 1, p)
 ```
 
+```{r}
+table(y, genotype)
+prop.table(table(genotype, y))
+prop.table(table(genotype, y), margin = 1)
+```
+
 Logistic regression - check simulated OR of ~1.5
 ```{r}
 logreg <- glm(y ~ genotype, family = binomial)
