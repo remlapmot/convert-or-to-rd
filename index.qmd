@@ -1,9 +1,17 @@
 ---
 title: Converting an odds ratio to a risk difference
+author: TP and RK
+date: 2023-11-17
 format:
   html:
     self-contained: true
 ---
+
+```{css}
+#| echo: false
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+code { font-family: 'Fira Code', monospace; }
+```
 
 ```{r setup}
 #| message: false
