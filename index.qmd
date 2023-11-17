@@ -1,0 +1,56 @@
+---
+title: Converting an odds ratio to a risk difference
+format:
+  html:
+    self-contained: true
+---
+
+```{r setup}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(gtsummary)
+library(DescTools)
+```
+
+Simulate a genotype `g` and an outcome `y`
+```{r}
+set.seed(12345)
+n <- 10000
+minor_allele_freq <- 0.15
+genotype <- rbinom(n, 2, minor_allele_freq)
+logitp <- -4 + log(1.5)*genotype
+p <- plogis(logitp)
+y <- rbinom(n, 1, p)
+```
+
+Logistic regression - check simulated OR of ~1.5
+```{r}
+logreg <- glm(y ~ genotype, family = binomial)
+oddsratio <- exp(coef(logreg)[2])
+print(oddsratio)
+tbl_regression(logreg, exponentiate = TRUE)
+```
+
+Risk difference
+```{r}
+rdreg <- glm(y ~ genotype, family = binomial(link = "identity"))
+summary(rdreg)
+tbl_regression(rdreg)
+p0 <- coef(rdreg)[1]
+rdiff <- coef(rdreg)[2]
+p1 <- rdiff + p0
+print(c(p0, p1, rdiff))
+```
+
+Formula from [Stack Exchange](https://stats.stackexchange.com/questions/324410/converting-odds-ratio-to-percentage-increase-reduction)
+```{r}
+pt <- (oddsratio * p0)/(1 + (oddsratio * p0) - p0)
+print(c(pt, pt - p0, pt / p0))
+```
+
+Check OR to RR conversion with DescTools
+
+```{r}
+ORToRelRisk(oddsratio, p0)
+```
