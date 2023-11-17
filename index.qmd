@@ -24,7 +24,7 @@ library(DescTools)
 Simulate a genotype `g` and an outcome `y`
 ```{r}
 set.seed(12345)
-n <- 10000
+n <- 1e5
 minor_allele_freq <- 0.15
 genotype <- rbinom(n, 2, minor_allele_freq)
 logitp <- -4 + log(1.5)*genotype
@@ -33,9 +33,12 @@ y <- rbinom(n, 1, p)
 ```
 
 ```{r}
-table(y, genotype)
+prop.table(table(genotype))
+prop.table(table(y))
+table(genotype, y)
 prop.table(table(genotype, y))
 prop.table(table(genotype, y), margin = 1)
+prop.table(table(genotype, y), margin = 2)
 ```
 
 Logistic regression - check simulated OR of ~1.5
