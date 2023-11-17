@@ -2,3 +2,5 @@
 * text=auto
 *.sh text eol=lf
 *.html linguist-vendored
+*.[Rr]md linguist-detectable
+*.[Qq]md linguist-detectable
