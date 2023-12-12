@@ -63,7 +63,9 @@ print(c(p0, p1, rdiff))
 Formula from [Stack Exchange](https://stats.stackexchange.com/questions/324410/converting-odds-ratio-to-percentage-increase-reduction)
 ```{r}
 pt <- (oddsratio * p0)/(1 + (oddsratio * p0) - p0)
-print(c(pt, pt - p0, pt / p0))
+results <- c(p0, pt, pt - p0, pt / p0)
+names(results) <- c("p_0", "p_t", "Risk Difference", "Risk Ratio")
+print(results)
 ```
 
 Check OR to RR conversion with DescTools
