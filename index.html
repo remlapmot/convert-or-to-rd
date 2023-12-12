@@ -3163,10 +3163,11 @@ genotype          0          1
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>logreg <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> genotype, <span class="at">family =</span> binomial)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>oddsratio <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(logreg)[<span class="dv">2</span>])</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(oddsratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(oddsratio) <span class="ot">&lt;-</span> <span class="st">&quot;Odds ratio&quot;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(oddsratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>genotype 
-1.483173 </code></pre>
+<pre><code>Odds ratio 
+  1.483173 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(logreg, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -3610,7 +3611,7 @@ AIC: 20280
 
 Number of Fisher Scoring iterations: 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(rdreg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(rdreg, <span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">style_sigfig</span>(x, <span class="at">digits =</span> <span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div id="avrwofmbyx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -4014,8 +4015,8 @@ text-indent: 25px;
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="label" class="gt_row gt_left">genotype</td>
-<td headers="estimate" class="gt_row gt_center">0.01</td>
-<td headers="ci" class="gt_row gt_center">0.01, 0.01</td>
+<td headers="estimate" class="gt_row gt_center">0.009194</td>
+<td headers="ci" class="gt_row gt_center">0.007249, 0.011202</td>
 <td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
   </tbody>
   
@@ -4030,20 +4031,22 @@ text-indent: 25px;
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(rdreg)[<span class="dv">1</span>]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rdiff <span class="ot">&lt;-</span> <span class="fu">coef</span>(rdreg)[<span class="dv">2</span>]</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> rdiff <span class="sc">+</span> p0</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(p0, p1, rdiff))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>res0 <span class="ot">&lt;-</span> <span class="fu">c</span>(p0, p1, rdiff)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res0) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p0&quot;</span>, <span class="st">&quot;p1&quot;</span>, <span class="st">&quot;Risk difference&quot;</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)    genotype    genotype 
- 0.01822615  0.02741977  0.00919362 </code></pre>
+<pre><code>             p0              p1 Risk difference 
+     0.01822615      0.02741977      0.00919362 </code></pre>
 </div>
 </div>
 <p>Formula from <a href="https://stats.stackexchange.com/questions/324410/converting-odds-ratio-to-percentage-increase-reduction">Stack Exchange</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pt <span class="ot">&lt;-</span> (oddsratio <span class="sc">*</span> p0)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> (oddsratio <span class="sc">*</span> p0) <span class="sc">-</span> p0)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">c</span>(p0, pt, pt <span class="sc">-</span> p0, pt <span class="sc">/</span> p0)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p_0&quot;</span>, <span class="st">&quot;p_t&quot;</span>, <span class="st">&quot;Risk Difference&quot;</span>, <span class="st">&quot;Risk Ratio&quot;</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p_0&quot;</span>, <span class="st">&quot;p_t&quot;</span>, <span class="st">&quot;Risk difference&quot;</span>, <span class="st">&quot;Risk ratio&quot;</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            p_0             p_t Risk Difference      Risk Ratio 
+<pre><code>            p_0             p_t Risk difference      Risk ratio 
     0.018226148     0.026796549     0.008570401     1.470225608 </code></pre>
 </div>
 </div>
@@ -4051,8 +4054,8 @@ text-indent: 25px;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ORToRelRisk</span>(oddsratio, p0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>genotype 
-1.470226 </code></pre>
+<pre><code>Odds ratio 
+  1.470226 </code></pre>
 </div>
 </div>
 
