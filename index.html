@@ -3111,7 +3111,8 @@ font-style: normal;
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>genotype <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">2</span>, minor_allele_freq)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>logitp <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">+</span> <span class="fu">log</span>(<span class="fl">1.5</span>)<span class="sc">*</span>genotype</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plogis</span>(logitp)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, p)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(genotype, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(genotype))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4056,6 +4057,55 @@ text-indent: 25px;
 <div class="cell-output cell-output-stdout">
 <pre><code>Odds ratio 
   1.470226 </code></pre>
+</div>
+</div>
+<p>Comparison using effectsize package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">riskratio_to_arr</span>(pt <span class="sc">/</span> p0, p0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Odds ratio 
+0.008570401 </code></pre>
+</div>
+</div>
+<p>Comparison using the risks package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(risks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: &#39;risks&#39;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from &#39;package:effectsize&#39;:
+
+    riskratio</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">riskdiff</span>(<span class="at">formula =</span> y <span class="sc">~</span> genotype, <span class="at">data =</span> dat)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Risk difference model, fitted via marginal standardization of a logistic model with delta method (margstd_delta).
+Call:
+stats::glm(formula = y ~ genotype, family = binomial(link = &quot;logit&quot;), 
+    data = dat, start = &quot;(no starting values)&quot;)
+
+Coefficients: (1 not defined because of singularities)
+          Estimate Std. Error z value Pr(&gt;|z|)    
+genotype 0.0080924  0.0008088   10.01   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 20373  on 99999  degrees of freedom
+Residual deviance: 20277  on 99998  degrees of freedom
+AIC: 20281
+
+Number of Fisher Scoring iterations: 6
+
+Confidence intervals for coefficients: (delta method)
+               2.5 %      97.5 %
+genotype 0.006507192 0.009677526</code></pre>
 </div>
 </div>
 
