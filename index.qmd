@@ -30,6 +30,7 @@ genotype <- rbinom(n, 2, minor_allele_freq)
 logitp <- -4 + log(1.5)*genotype
 p <- plogis(logitp)
 y <- rbinom(n, 1, p)
+dat <- data.frame(genotype, y)
 ```
 
 ```{r}
@@ -75,4 +76,18 @@ Check OR to RR conversion with DescTools
 
 ```{r}
 ORToRelRisk(oddsratio, p0)
+```
+
+Comparison using effectsize package
+
+```{r}
+library(effectsize)
+riskratio_to_arr(pt / p0, p0)
+```
+
+Comparison using the risks package
+```{r}
+library(risks)
+fit <- riskdiff(y ~ genotype, data = dat)
+summary(fit)
 ```
