@@ -4080,7 +4080,7 @@ Attaching package: &#39;risks&#39;</code></pre>
 
     riskratio</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">riskdiff</span>(<span class="at">formula =</span> y <span class="sc">~</span> genotype, <span class="at">data =</span> dat)</span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">riskdiff</span>(y <span class="sc">~</span> genotype, <span class="at">data =</span> dat)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -4108,6 +4108,11 @@ Confidence intervals for coefficients: (delta method)
 genotype 0.006507192 0.009677526</code></pre>
 </div>
 </div>
+<p>References</p>
+<ul>
+<li>Zhang J, Yu KF. What’s the Relative Risk? A Method of Correcting the Odds Ratio in Cohort Studies of Common Outcomes. JAMA. 1998;280(19):1690–1691. doi:10.1001/jama.280.19.1690 <a href="https://doi.org/10.1001/jama.280.19.1690" class="uri">https://doi.org/10.1001/jama.280.19.1690</a></li>
+<li>Grant R, BMJ 2014, 348 <a href="https://doi.org/10.1136/bmj.f7450" class="uri">https://doi.org/10.1136/bmj.f7450</a></li>
+</ul>
 
 </main>
 <!-- /main column -->
