@@ -91,3 +91,8 @@ library(risks)
 fit <- riskdiff(y ~ genotype, data = dat)
 summary(fit)
 ```
+
+References
+
+* Zhang J, Yu KF. What's the Relative Risk? A Method of Correcting the Odds Ratio in Cohort Studies of Common Outcomes. JAMA. 1998;280(19):1690–1691. doi:10.1001/jama.280.19.1690 <https://doi.org/10.1001/jama.280.19.1690>
+* Grant R, BMJ 2014, 348 <https://doi.org/10.1136/bmj.f7450>
