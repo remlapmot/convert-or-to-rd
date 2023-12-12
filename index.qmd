@@ -45,6 +45,7 @@ Logistic regression - check simulated OR of ~1.5
 ```{r}
 logreg <- glm(y ~ genotype, family = binomial)
 oddsratio <- exp(coef(logreg)[2])
+names(oddsratio) <- "Odds ratio"
 print(oddsratio)
 tbl_regression(logreg, exponentiate = TRUE)
 ```
@@ -53,18 +54,20 @@ Risk difference
 ```{r}
 rdreg <- glm(y ~ genotype, family = binomial(link = "identity"))
 summary(rdreg)
-tbl_regression(rdreg)
+tbl_regression(rdreg, estimate_fun = function(x) style_sigfig(x, digits = 6))
 p0 <- coef(rdreg)[1]
 rdiff <- coef(rdreg)[2]
 p1 <- rdiff + p0
-print(c(p0, p1, rdiff))
+res0 <- c(p0, p1, rdiff)
+names(res0) <- c("p0", "p1", "Risk difference")
+print(res0)
 ```
 
 Formula from [Stack Exchange](https://stats.stackexchange.com/questions/324410/converting-odds-ratio-to-percentage-increase-reduction)
 ```{r}
 pt <- (oddsratio * p0)/(1 + (oddsratio * p0) - p0)
 results <- c(p0, pt, pt - p0, pt / p0)
-names(results) <- c("p_0", "p_t", "Risk Difference", "Risk Ratio")
+names(results) <- c("p_0", "p_t", "Risk difference", "Risk ratio")
 print(results)
 ```
 
